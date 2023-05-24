@@ -1,0 +1,11 @@
+Items: {
+	Staff: {
+		DisplayName: Staff
+		Tooltip: ""
+	}
+}
+
+Projectiles: {
+	Sparkle.DisplayName: Sparkle
+	StaffDrawing.DisplayName: Staff Drawing
+}

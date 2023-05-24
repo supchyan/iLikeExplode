@@ -1,0 +1,3 @@
+displayName = I Like Explode
+author = supchyan
+version = 0.1
