@@ -24,7 +24,6 @@ namespace iLikeExplode.Explode.Projectiles {
         public override void AI() {
 
             Player player = Main.player[Main.myPlayer];
-            player.heldProj = Projectile.whoAmI;
             Projectile.netImportant = true;
             Projectile.netUpdate = true;
 
@@ -61,8 +60,8 @@ namespace iLikeExplode.Explode.Projectiles {
             // setting staff's move set:
 
             Vector2 offset = new Vector2(0f, 5f);
-            Vector2 between = Projectile.Center - player.Center;
-            Vector2 mountBetween = Projectile.Center - player.MountedCenter; // fixes issue, when player's calling staff sitting on mount
+            Vector2 mountBetween = Main.MouseWorld - player.MountedCenter; // fixes issue, when player's calling staff sitting on mount
+            Vector2 mouseToPlayer = Main.MouseWorld - player.Center;
             Projectile.position = player.Center - new Vector2(Projectile.width/2f, Projectile.height/2f) + offset;
 
             if(player.mount._active)
@@ -75,27 +74,34 @@ namespace iLikeExplode.Explode.Projectiles {
 
                 case AIState.BattleReady :
 
-                    Projectile.velocity = Projectile.velocity.DirectionTo(Main.MouseWorld - player.Center)*(Main.MouseWorld - player.Center).Length();
+                    player.heldProj = Projectile.whoAmI;
+
+                    Projectile.scale = 1f;
+                    Projectile.spriteDirection = player.direction;
+                    Projectile.velocity = Projectile.velocity.DirectionTo(mouseToPlayer)*(mouseToPlayer).Length();
                     Projectile.velocity.X /= Main.screenWidth/60f;
                     Projectile.velocity.Y /= Main.screenHeight/40f;
-                    Projectile.rotation = MathHelper.ToRadians(45f) + (Main.MouseWorld - player.Center).ToRotation();
+                    if(player.direction == 1)
+                    Projectile.rotation = MathHelper.ToRadians(45f) + mouseToPlayer.ToRotation();
+                    else
+                    Projectile.rotation = MathHelper.ToRadians(45f+90f) + mouseToPlayer.ToRotation();
 
                     _scaleLerp = 0f;
 
                 break;
 
                 case AIState.Idle :
-
-                    float _scale = (float)Math.Pow(_scaleLerp, 2f) / (2f * ((float)Math.Pow(_scaleLerp, 2f) - _scaleLerp) + 1f);
-                    Projectile.scale = _scale; 
                     
-                    if(_scale < 1f)
-                    _scaleLerp += 0.06f;
-
-
-                    Projectile.velocity = new Vector2(100*_localDir, 0).DirectionTo(mountBetween)*50f +
+                    _scaleLerp += 3f;
+                    if(_scaleLerp > 90f)
+                    _scaleLerp = 90f;
+                    
+                    Projectile.scale = (float)Math.Pow(Math.Sin(MathHelper.ToRadians(_scaleLerp)), 10f);
+                    Projectile.velocity = new Vector2(0f, 0f).DirectionTo(mountBetween)*mountBetween.Length() +
                     new Vector2(2f * (float)Math.Cos(InfTimer), 5f * (float)Math.Sin(InfTimer));
-                    Projectile.rotation = MathHelper.ToRadians(135) +
+                    Projectile.velocity.X /= -Main.screenWidth/100f;
+                    Projectile.velocity.Y = 0;
+                    Projectile.rotation = MathHelper.ToRadians(135f) +
                         MathHelper.Lerp(0f, MathHelper.ToRadians(10f), (float)Math.Pow(LerpCycle, 2f) /
                             (2f * ((float)Math.Pow(LerpCycle, 2f) - LerpCycle) + 1f));
 

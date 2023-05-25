@@ -1,10 +1,7 @@
 Items: {
 	Staff: {
 		DisplayName: Scarlet Destruction
-		Tooltip: 
-		'''
-		THIS WILL BE COOL MOD I SWEAR
-		'''
+		Tooltip: THIS WILL BE COOL MOD I SWEAR
 	}
 }
 
