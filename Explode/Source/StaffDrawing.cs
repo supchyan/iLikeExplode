@@ -24,6 +24,8 @@ namespace iLikeExplode.Explode.Projectiles {
         public override void AI() {
 
             Player player = Main.player[Main.myPlayer];
+            player.direction = _localDir;
+            Projectile.spriteDirection = _localDir;
             Projectile.netImportant = true;
             Projectile.netUpdate = true;
 
@@ -60,7 +62,6 @@ namespace iLikeExplode.Explode.Projectiles {
             // setting staff's move set:
 
             Vector2 offset = new Vector2(0f, 5f);
-            Vector2 mountBetween = Main.MouseWorld - player.MountedCenter; // fixes issue, when player's calling staff sitting on mount
             Vector2 mouseToPlayer = Main.MouseWorld - player.Center;
             Projectile.position = player.Center - new Vector2(Projectile.width/2f, Projectile.height/2f) + offset;
 
@@ -77,11 +78,10 @@ namespace iLikeExplode.Explode.Projectiles {
                     player.heldProj = Projectile.whoAmI;
 
                     Projectile.scale = 1f;
-                    Projectile.spriteDirection = player.direction;
                     Projectile.velocity = Projectile.velocity.DirectionTo(mouseToPlayer)*(mouseToPlayer).Length();
                     Projectile.velocity.X /= Main.screenWidth/60f;
                     Projectile.velocity.Y /= Main.screenHeight/40f;
-                    if(player.direction == 1)
+                    if(_localDir == 1)
                     Projectile.rotation = MathHelper.ToRadians(45f) + mouseToPlayer.ToRotation();
                     else
                     Projectile.rotation = MathHelper.ToRadians(45f+90f) + mouseToPlayer.ToRotation();
@@ -97,11 +97,16 @@ namespace iLikeExplode.Explode.Projectiles {
                     _scaleLerp = 90f;
                     
                     Projectile.scale = (float)Math.Pow(Math.Sin(MathHelper.ToRadians(_scaleLerp)), 10f);
-                    Projectile.velocity = new Vector2(0f, 0f).DirectionTo(mountBetween)*mountBetween.Length() +
+                    Projectile.velocity = new Vector2(0f, 0f).DirectionTo(mouseToPlayer)*mouseToPlayer.Length() +
                     new Vector2(2f * (float)Math.Cos(InfTimer), 5f * (float)Math.Sin(InfTimer));
                     Projectile.velocity.X /= -Main.screenWidth/100f;
                     Projectile.velocity.Y = 0;
+                    if(_localDir == 1)
                     Projectile.rotation = MathHelper.ToRadians(135f) +
+                        MathHelper.Lerp(0f, MathHelper.ToRadians(10f), (float)Math.Pow(LerpCycle, 2f) /
+                            (2f * ((float)Math.Pow(LerpCycle, 2f) - LerpCycle) + 1f));
+                    else
+                    Projectile.rotation = MathHelper.ToRadians(135f+90f) +
                         MathHelper.Lerp(0f, MathHelper.ToRadians(10f), (float)Math.Pow(LerpCycle, 2f) /
                             (2f * ((float)Math.Pow(LerpCycle, 2f) - LerpCycle) + 1f));
 
@@ -115,11 +120,9 @@ namespace iLikeExplode.Explode.Projectiles {
                 MathHelper.ToDegrees((Main.MouseWorld - player.Center).ToRotation()) > -90f && 
                 MathHelper.ToDegrees((Main.MouseWorld - player.Center).ToRotation()) < 90f)
             {
-                player.direction = 1;
                 _localDir = 1;
             }
             else {
-                player.direction = -1;
                 _localDir = -1;
             }
 
