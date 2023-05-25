@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using iLikeExplode.Explode.Source;
+using iLikeExplode.Explode.Tools;
 
 namespace iLikeExplode.Explode.Projectiles {
     public class StaffDrawing : ModProjectile {
@@ -96,7 +97,7 @@ namespace iLikeExplode.Explode.Projectiles {
                     if(_scaleLerp > 90f)
                     _scaleLerp = 90f;
                     
-                    Projectile.scale = (float)Math.Pow(Math.Sin(MathHelper.ToRadians(_scaleLerp)), 10f);
+                    Projectile.scale = (float)Math.Pow(Math.Sin(MathHelper.ToRadians(_scaleLerp)), 5f);
                     Projectile.velocity = new Vector2(0f, 0f).DirectionTo(mouseToPlayer)*mouseToPlayer.Length() +
                     new Vector2(2f * (float)Math.Cos(InfTimer), 5f * (float)Math.Sin(InfTimer));
                     Projectile.velocity.X /= -Main.screenWidth/100f;

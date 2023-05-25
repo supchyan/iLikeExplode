@@ -65,6 +65,7 @@ namespace iLikeExplode.Explode.Source {
             }
             
             // drawing a staff sprite
+            
             if(player.ownedProjectileCounts[ModContent.ProjectileType<StaffDrawing>()] < 1) {
                 Projectile.NewProjectile(Entity.GetSource_FromThis(), player.Center, Vector2.Zero,
                 ModContent.ProjectileType<StaffDrawing>(), 0, 0, player.whoAmI);

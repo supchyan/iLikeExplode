@@ -10,7 +10,7 @@ using iLikeExplode.Explode.Projectiles;
 
 namespace iLikeExplode.Explode.Tools {
     public class PlayerFix : ModPlayer {
-        public float rot;
+        private float rot;
         public override void ModifyDrawInfo(ref PlayerDrawSet drawInfo) {
 
             if(Main.LocalPlayer.HeldItem.ModItem is not Staff || Main.LocalPlayer.mount._active)
