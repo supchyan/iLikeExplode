@@ -24,12 +24,16 @@ namespace iLikeExplode.Explode.Source {
             
             Item.damage = 1;
             Item.DamageType = DamageClass.Magic;
+            Item.shoot = ProjectileID.BlackCat;
+            Item.mana = 1;
             
-            Item.useStyle = ItemUseStyleID.Shoot;
+            Item.useStyle = ItemUseStyleID.None;
+            Item.useAnimation = 10;
+            Item.useStyle = 10;
             Item.noUseGraphic = true;
         }
         public override bool CanUseItem(Player player) {
-            return false;
+            return true;
         }
 
         public override void HoldItem(Player player) {
@@ -70,8 +74,11 @@ namespace iLikeExplode.Explode.Source {
                 Projectile.NewProjectile(Entity.GetSource_FromThis(), player.Center, Vector2.Zero,
                 ModContent.ProjectileType<StaffDrawing>(), 0, 0, player.whoAmI);
             }
+            
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
+            Projectile.NewProjectile(Entity.GetSource_FromThis(), player.Center, Vector2.Zero,
+                ModContent.ProjectileType<Sparkle>(), 0, 0, player.whoAmI);
             return false;
         }
     }

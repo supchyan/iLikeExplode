@@ -8,4 +8,6 @@ Items: {
 Projectiles: {
 	Sparkle.DisplayName: Sparkle
 	StaffDrawing.DisplayName: Staff Drawing
+	SigilHuge.DisplayName: Sigil Huge
+	SigilSmol.DisplayName: Sigil Smol
 }

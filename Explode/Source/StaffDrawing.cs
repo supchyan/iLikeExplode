@@ -6,11 +6,14 @@ using Microsoft.Xna.Framework;
 using iLikeExplode.Explode.Source;
 using iLikeExplode.Explode.Tools;
 
-namespace iLikeExplode.Explode.Projectiles {
+namespace iLikeExplode.Explode.Source {
     public class StaffDrawing : ModProjectile {
-        private int _localDir;
+        public static int _localDir;
         private int _toggle;
         private float _scaleLerp;
+        public static Vector2 _staffPos;
+        public static Vector2 _staffCenter;
+        public static Vector2 _staffVel;
         public override string Texture => "iLikeExplode/Explode/Textures/Staff";
         private enum AIState {
             Idle,
@@ -23,6 +26,10 @@ namespace iLikeExplode.Explode.Projectiles {
 		public ref float InfTimer => ref Projectile.ai[1]; // for some infinite rotations
         public ref float LerpCycle => ref Projectile.ai[2]; // for Poke
         public override void AI() {
+
+            _staffPos = Projectile.position;
+            _staffVel = Projectile.velocity;
+            _staffCenter = Projectile.Center;
 
             Player player = Main.player[Main.myPlayer];
             player.direction = _localDir;
@@ -87,7 +94,7 @@ namespace iLikeExplode.Explode.Projectiles {
                     else
                     Projectile.rotation = MathHelper.ToRadians(45f+90f) + mouseToPlayer.ToRotation();
 
-                    _scaleLerp = 0f;
+                    _scaleLerp = 0f;                    
 
                 break;
 
