@@ -7,5 +7,5 @@ This project is another mod for Terraria, that adds "Scarlet Destruction" - magi
 
 This's only wip, so please be patient, before i'll release it ^^
 
-https://github.com/supchyan/iLikeExplode/assets/123704468/795f8936-de0e-42cd-bc9e-0f8a381f1d3a
+![wip-min](https://github.com/supchyan/iLikeExplode/assets/123704468/6c2b4256-d077-4abd-89f8-6ee6a2412311)
 
