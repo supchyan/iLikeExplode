@@ -15,8 +15,13 @@ namespace iLikeExplode.Explode.Tools {
 
             if(Main.LocalPlayer.HeldItem.ModItem is not Staff || Main.LocalPlayer.mount._active)
             return;
+
             // player's head rotation
-            Main.LocalPlayer.headRotation = rot;
+
+            Main.LocalPlayer.headRotation = rot/4f;
+
+            Main.NewText(rot/4f);
+
             if(
                 MathHelper.ToDegrees((Main.MouseWorld - Main.LocalPlayer.Center).ToRotation()) > -90 && 
                 MathHelper.ToDegrees((Main.MouseWorld - Main.LocalPlayer.Center).ToRotation()) < 90)
@@ -24,7 +29,7 @@ namespace iLikeExplode.Explode.Tools {
                 rot = (Main.MouseWorld - Main.LocalPlayer.Center).ToRotation();    
             }
             else {
-                rot = (Main.MouseWorld - Main.LocalPlayer.Center).ToRotation() - (float)Math.PI;
+                rot = (Main.LocalPlayer.Center - Main.MouseWorld).ToRotation();
             }
 		}
     }

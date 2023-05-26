@@ -65,7 +65,7 @@ namespace iLikeExplode.Explode.Projectiles {
                     dust.noGravity = true;
                     dust.rotation = MathHelper.ToRadians(Timer);
                     dust.position = _dustPos;
-                    dust.velocity = new Vector2((float)Math.Sin(MathHelper.ToRadians(Timer)), -2f);
+                    dust.velocity = new Vector2((float)Math.Sin(MathHelper.ToRadians(Timer)) + Main.WindForVisuals, -2f);
 
                 break;
 
