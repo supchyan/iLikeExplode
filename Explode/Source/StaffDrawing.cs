@@ -4,6 +4,7 @@ using Terraria.ID;
 using Terraria.ModLoader;
 using Microsoft.Xna.Framework;
 using iLikeExplode.Explode.Source;
+using iLikeExplode.Explode.Projectiles;
 using iLikeExplode.Explode.Tools;
 
 namespace iLikeExplode.Explode.Source {
@@ -14,6 +15,7 @@ namespace iLikeExplode.Explode.Source {
         public static Vector2 _staffPos;
         public static Vector2 _staffCenter;
         public static Vector2 _staffVel;
+        public static float _staffRot;
         public override string Texture => "iLikeExplode/Explode/Textures/Staff";
         private enum AIState {
             Idle,
@@ -23,13 +25,14 @@ namespace iLikeExplode.Explode.Source {
 			get => (AIState)Projectile.ai[0];
 			set => Projectile.ai[0] = (float)value;
 		}
-		public ref float InfTimer => ref Projectile.ai[1]; // for some infinite rotations
-        public ref float LerpCycle => ref Projectile.ai[2]; // for Poke
+		public ref float InfTimer => ref Projectile.ai[1];
+        public ref float LerpCycle => ref Projectile.ai[2];
         public override void AI() {
 
             _staffPos = Projectile.position;
             _staffVel = Projectile.velocity;
             _staffCenter = Projectile.Center;
+            _staffRot = Projectile.rotation;
 
             Player player = Main.player[Main.myPlayer];
             player.direction = _localDir;
@@ -67,11 +70,20 @@ namespace iLikeExplode.Explode.Source {
            
             }
 
+            // drawing scarlet core
+
+            if(player.ownedProjectileCounts[ModContent.ProjectileType<ScarletCore>()] < 1) {
+                Projectile.NewProjectile(Entity.GetSource_FromThis(), player.Center, Vector2.Zero,
+                ModContent.ProjectileType<ScarletCore>(), 0, 0, player.whoAmI);
+            }
+
             // setting staff's move set:
 
-            Vector2 offset = new Vector2(0f, 5f);
-            Vector2 mouseToPlayer = Main.MouseWorld - player.Center;
-            Projectile.position = player.Center - new Vector2(Projectile.width/2f, Projectile.height/2f) + offset;
+            Vector2 _offset = new Vector2(0f, 5f);
+            Vector2 _mouseToPlayer = Main.MouseWorld - player.Center;
+            float _length = _mouseToPlayer.Length();
+
+            Projectile.position = player.Center - new Vector2(Projectile.width/2f, Projectile.height/2f) + _offset;
 
             if(player.mount._active)
                 CurrentAIState = AIState.Idle;
@@ -86,13 +98,21 @@ namespace iLikeExplode.Explode.Source {
                     player.heldProj = Projectile.whoAmI;
 
                     Projectile.scale = 1f;
-                    Projectile.velocity = Projectile.velocity.DirectionTo(mouseToPlayer)*(mouseToPlayer).Length();
+
+                    // despawn fix:
+
+                    if(_length < 0.01f)
+                     _length = 0.01f;
+
+                    // setting actual movement:
+
+                    Projectile.velocity = Projectile.velocity.DirectionTo(_mouseToPlayer) * _length;
                     Projectile.velocity.X /= Main.screenWidth/60f;
                     Projectile.velocity.Y /= Main.screenHeight/40f;
                     if(_localDir == 1)
-                    Projectile.rotation = MathHelper.ToRadians(45f) + mouseToPlayer.ToRotation();
+                    Projectile.rotation = MathHelper.ToRadians(45f) + _mouseToPlayer.ToRotation();
                     else
-                    Projectile.rotation = MathHelper.ToRadians(45f+90f) + mouseToPlayer.ToRotation();
+                    Projectile.rotation = MathHelper.ToRadians(45f+90f) + _mouseToPlayer.ToRotation();
 
                     _scaleLerp = 0f;                    
 
@@ -105,7 +125,7 @@ namespace iLikeExplode.Explode.Source {
                     _scaleLerp = 90f;
                     
                     Projectile.scale = (float)Math.Pow(Math.Sin(MathHelper.ToRadians(_scaleLerp)), 5f);
-                    Projectile.velocity = new Vector2(0f, 0f).DirectionTo(mouseToPlayer)*mouseToPlayer.Length() +
+                    Projectile.velocity = Projectile.velocity.DirectionTo(_mouseToPlayer) * _length +
                     new Vector2(2f * (float)Math.Cos(InfTimer), 5f * (float)Math.Sin(InfTimer));
                     Projectile.velocity.X /= -Main.screenWidth/100f;
                     Projectile.velocity.Y = 0;

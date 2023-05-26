@@ -10,4 +10,7 @@ Projectiles: {
 	StaffDrawing.DisplayName: Staff Drawing
 	SigilHuge.DisplayName: Sigil Huge
 	SigilSmol.DisplayName: Sigil Smol
+	ScarletCore.DisplayName: Scarlet Core
+	Sparkles.DisplayName: Sparkles
+	CoreDust.DisplayName: Core Dust
 }

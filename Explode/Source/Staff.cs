@@ -78,7 +78,7 @@ namespace iLikeExplode.Explode.Source {
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             Projectile.NewProjectile(Entity.GetSource_FromThis(), player.Center, Vector2.Zero,
-                ModContent.ProjectileType<Sparkle>(), 0, 0, player.whoAmI);
+                ModContent.ProjectileType<Sparkles>(), 0, 0, player.whoAmI);
             return false;
         }
     }
