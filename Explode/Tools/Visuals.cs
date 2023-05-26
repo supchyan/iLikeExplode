@@ -6,20 +6,28 @@ using Terraria.ModLoader;
 
 namespace iLikeExplode.Explode.Tools {
     public class Visuals : ModSystem {
+
+        // rainbow color
+
         private int rbT;
         private int rbR;
         private int rbG;
         private int rbB;
 
+
+        // master color
+
         private int scT;
         private int scR;
         private int scG;
         private int scB;
+
         public static Color RainbowColor;
         public static Color MasterColor;
+
         public override void PreUpdateTime() {
             
-            switch(rbT) { // CODE FOR RAINBOW EFFECT
+            switch(rbT) { // RAINBOW EFFECT
                 case 0:
                 rbR=255;
                 rbB+=15;
@@ -61,7 +69,7 @@ namespace iLikeExplode.Explode.Tools {
         
             RainbowColor = new Color(rbR, rbG, rbB); // SETTING COLOR
 
-            switch(scT) { // CODE FOR MASTER COLOR EFFECT
+            switch(scT) { // MASTER COLOR EFFECT
                 case 0:
                 scR=255;
                 scG+=10;
@@ -77,8 +85,8 @@ namespace iLikeExplode.Explode.Tools {
                 break;
 
             }
-            
-            MasterColor = new Color(scR, scG, scB); // SETTING COLORS
+
+            MasterColor = new Color(scR, scG, scB); // SETTING COLOR
 
 
         }
