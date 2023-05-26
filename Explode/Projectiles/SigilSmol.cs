@@ -8,7 +8,7 @@ using iLikeExplode.Explode.Tools;
 
 namespace iLikeExplode.Explode.Projectiles {
     public class SigilSmol : ModProjectile {
-        public override string Texture => "iLikeExplode/Explode/Textures/Dot";
+        public override string Texture => "iLikeExplode/Explode/Textures/MainSigil";
         public override void SetStaticDefaults() {
 
         }

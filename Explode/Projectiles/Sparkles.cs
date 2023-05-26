@@ -26,6 +26,10 @@ namespace iLikeExplode.Explode.Projectiles {
             return false;
         }
         public override void AI() {
+
+            Projectile.netImportant = true;
+            Projectile.netUpdate = true;
+            
             _preparation--;
 
             // 1

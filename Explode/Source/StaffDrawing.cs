@@ -16,6 +16,7 @@ namespace iLikeExplode.Explode.Source {
         public static Vector2 _staffCenter;
         public static Vector2 _staffVel;
         public static float _staffRot;
+        public static float _shootingFactor;
         public override string Texture => "iLikeExplode/Explode/Textures/Staff";
         private enum AIState {
             Idle,
@@ -91,6 +92,13 @@ namespace iLikeExplode.Explode.Source {
             if(!player.mount._active)
                 CurrentAIState = AIState.BattleReady;
 
+            _shootingFactor+=0.1f;
+            if(_shootingFactor > 1f)
+            _shootingFactor = 1f;
+            // if(Main.mouseLeft) { // this for future shooting code . . .
+            //     _shootingFactor = 0.2f;
+            // }
+
             switch (CurrentAIState) {
 
                 case AIState.BattleReady :
@@ -106,7 +114,7 @@ namespace iLikeExplode.Explode.Source {
 
                     // setting actual movement:
 
-                    Projectile.velocity = Projectile.velocity.DirectionTo(_mouseToPlayer) * _length;
+                    Projectile.velocity = Projectile.velocity.DirectionTo(_mouseToPlayer) * _length * _shootingFactor;
                     Projectile.velocity.X /= Main.screenWidth/60f;
                     Projectile.velocity.Y /= Main.screenHeight/40f;
                     if(_localDir == 1)
@@ -131,11 +139,11 @@ namespace iLikeExplode.Explode.Source {
                     Projectile.velocity.Y = 0;
                     if(_localDir == 1)
                     Projectile.rotation = MathHelper.ToRadians(135f) +
-                        MathHelper.Lerp(0f, MathHelper.ToRadians(10f), (float)Math.Pow(LerpCycle, 2f) /
+                        MathHelper.Lerp(MathHelper.ToRadians(-5f), MathHelper.ToRadians(5f), (float)Math.Pow(LerpCycle, 2f) /
                             (2f * ((float)Math.Pow(LerpCycle, 2f) - LerpCycle) + 1f));
                     else
                     Projectile.rotation = MathHelper.ToRadians(135f+90f) +
-                        MathHelper.Lerp(0f, MathHelper.ToRadians(10f), (float)Math.Pow(LerpCycle, 2f) /
+                        MathHelper.Lerp(MathHelper.ToRadians(-5f), MathHelper.ToRadians(5f), (float)Math.Pow(LerpCycle, 2f) /
                             (2f * ((float)Math.Pow(LerpCycle, 2f) - LerpCycle) + 1f));
 
                 break;

@@ -28,8 +28,8 @@ namespace iLikeExplode.Explode.Source {
             Item.mana = 1;
             
             Item.useStyle = ItemUseStyleID.None;
-            Item.useAnimation = 10;
-            Item.useStyle = 10;
+            Item.useAnimation = 5;
+            Item.useStyle = 5;
             Item.noUseGraphic = true;
         }
         public override bool CanUseItem(Player player) {
@@ -74,6 +74,11 @@ namespace iLikeExplode.Explode.Source {
                 Projectile.NewProjectile(Entity.GetSource_FromThis(), player.Center, Vector2.Zero,
                 ModContent.ProjectileType<StaffDrawing>(), 0, 0, player.whoAmI);
             }
+
+            // if(player.ownedProjectileCounts[ModContent.ProjectileType<SigilHuge>()] < 1) {
+            //     Projectile.NewProjectile(Entity.GetSource_FromThis(), player.Center, Vector2.Zero,
+            //     ModContent.ProjectileType<SigilHuge>(), 0, 0, player.whoAmI);
+            // }
             
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
