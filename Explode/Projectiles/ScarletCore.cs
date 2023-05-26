@@ -39,6 +39,9 @@ namespace iLikeExplode.Explode.Projectiles {
             Player player = Main.player[Main.myPlayer];
             Vector2 _mouseToPlayer = Main.MouseWorld - player.Center;
             float _length = _mouseToPlayer.Length();
+            Vector2 _dustPos = player.Center + new Vector2(0,0).DirectionFrom(-_mouseToPlayer) * 35f + 
+                    new Vector2(0f,0).DirectionTo(_mouseToPlayer) * _length / new Vector2(Main.screenWidth/60f, Main.screenHeight/40f) + 
+                    new Vector2(0,5f);
 
             if(player.mount._active)
                 CurrentAIState = AIState.Despawn;
@@ -58,9 +61,11 @@ namespace iLikeExplode.Explode.Projectiles {
                 case AIState.Spawn :
 
                     Dust dust = Dust.NewDustPerfect(Projectile.Center, DustID.PortalBolt, Vector2.Zero, 255, Color.Red, 1f);
-                    dust.fadeIn = 100f;
+                    dust.fadeIn = 0.01f;
                     dust.noGravity = true;
-                    dust.position = player.Center + new Vector2(0,0).DirectionFrom(-_mouseToPlayer) * 35f + new Vector2(0f,0).DirectionTo(_mouseToPlayer) * _length / new Vector2(Main.screenWidth/60f, Main.screenHeight/40f) + new Vector2(0,5f);
+                    dust.rotation = MathHelper.ToRadians(Timer);
+                    dust.position = _dustPos;
+                    dust.velocity = new Vector2((float)Math.Sin(MathHelper.ToRadians(Timer)), -2f);
 
                 break;
 
