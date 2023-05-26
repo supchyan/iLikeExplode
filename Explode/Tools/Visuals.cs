@@ -6,54 +6,81 @@ using Terraria.ModLoader;
 
 namespace iLikeExplode.Explode.Tools {
     public class Visuals : ModSystem {
-        private int i;
-        private int r;
-        private int g;
-        private int b;
+        private int rbT;
+        private int rbR;
+        private int rbG;
+        private int rbB;
+
+        private int scT;
+        private int scR;
+        private int scG;
+        private int scB;
         public static Color RainbowColor;
+        public static Color MasterColor;
         public override void PreUpdateTime() {
             
-            switch(i) { // CODE FOR RAINBOW EFFECT
+            switch(rbT) { // CODE FOR RAINBOW EFFECT
                 case 0:
-                r=255;
-                b+=15;
-                if(b == 255) {
-                    i = 1;
+                rbR=255;
+                rbB+=15;
+                if(rbB == 255) {
+                    rbT = 1;
                 }
                 break;
                 case 1:
-                r-=15;
-                if(r == 0) {
-                    i = 2;
+                rbR-=15;
+                if(rbR == 0) {
+                    rbT = 2;
                 }
                 break;
                 case 2:
-                g+=15;
-                if(g == 255) {
-                    i = 3;
+                rbG+=15;
+                if(rbG == 255) {
+                    rbT = 3;
                 }
                 break;
                 case 3:
-                b-=15;
-                if(b == 0) {
-                    i = 4;
+                rbB-=15;
+                if(rbB == 0) {
+                    rbT = 4;
                 }
                 break;
                 case 4:
-                r+=15;
-                if(r == 255) {
-                    i = 5;
+                rbR+=15;
+                if(rbR == 255) {
+                    rbT = 5;
                 }
                 break;
                 case 5:
-                g-=15;
-                if(g == 0) {
-                    i = 0;
+                rbG-=15;
+                if(rbG == 0) {
+                    rbT = 0;
                 }
                 break;
             }
         
-            RainbowColor = new Color(r, g, b); // SETTING COLORS
+            RainbowColor = new Color(rbR, rbG, rbB); // SETTING COLOR
+
+            switch(scT) { // CODE FOR MASTER COLOR EFFECT
+                case 0:
+                scR=255;
+                scG+=10;
+                if(scG == 200) {
+                    scT = 1;
+                }
+                break;
+                case 1:
+                scG-=5;
+                if(scG == 0) {
+                    scT = 0;
+                }
+                break;
+
+            }
+            
+            MasterColor = new Color(scR, scG, scB); // SETTING COLORS
+
+
         }
     }
 }

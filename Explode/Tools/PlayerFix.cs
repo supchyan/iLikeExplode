@@ -20,8 +20,6 @@ namespace iLikeExplode.Explode.Tools {
 
             Main.LocalPlayer.headRotation = rot/4f;
 
-            Main.NewText(rot/4f);
-
             if(
                 MathHelper.ToDegrees((Main.MouseWorld - Main.LocalPlayer.Center).ToRotation()) > -90 && 
                 MathHelper.ToDegrees((Main.MouseWorld - Main.LocalPlayer.Center).ToRotation()) < 90)
