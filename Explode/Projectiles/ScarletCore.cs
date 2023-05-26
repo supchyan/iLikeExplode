@@ -41,7 +41,9 @@ namespace iLikeExplode.Explode.Projectiles {
             Vector2 _mouseToPlayer = Main.MouseWorld - player.Center;
 
             float _length = _mouseToPlayer.Length();
-
+            float _dScale = 1f + (float)Math.Pow(Math.Cos(MathHelper.ToRadians(Timer)), 2) / 2f *
+                            3f * (float)Math.Pow(Math.Sin(MathHelper.ToRadians(10f*Timer)), 2) / 2f;
+ 
             Vector2 _dInsideStaffPos = player.Center + new Vector2(0f, 0f).DirectionFrom(-_mouseToPlayer) * 35f + 
                 new Vector2(0f, 0f).DirectionTo(_mouseToPlayer) * _length / new Vector2(Main.screenWidth/60f, Main.screenHeight/40f) + 
                 new Vector2(0f, 5f);
@@ -73,6 +75,7 @@ namespace iLikeExplode.Explode.Projectiles {
                     _dInsideStaff.rotation = MathHelper.ToRadians(Timer);
                     _dInsideStaff.position = _dInsideStaffPos;
                     _dInsideStaff.velocity = new Vector2((float)Math.Sin(MathHelper.ToRadians(Timer)) + Main.WindForVisuals, -2f);
+                    _dInsideStaff.scale = _dScale;
 
                 break;
 
@@ -84,6 +87,7 @@ namespace iLikeExplode.Explode.Projectiles {
                     _dAboveHead.rotation = MathHelper.ToRadians(Timer);
                     _dAboveHead.position = _dAboveHeadPos;
                     _dAboveHead.velocity = new Vector2((float)Math.Sin(MathHelper.ToRadians(Timer)) + Main.WindForVisuals, -2f);
+                    _dAboveHead.scale = _dScale;
 
                 break;
 
