@@ -117,9 +117,9 @@ namespace iLikeExplode.Explode.Tools {
                 
             }
 
-            intensity = (Main.maxRain*((Main.maxRaining+0.1f)/0.86f)/100);
+            intensity = (Main.maxRain * Main.maxRaining / (20.0f * 645.0f));
 
-            Filters.Scene["RainFilter"].GetShader().UseIntensity(intensity*transition);
+            Filters.Scene["RainFilter"].GetShader().UseOpacity(intensity);
 
         }
 
