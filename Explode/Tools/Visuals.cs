@@ -105,6 +105,10 @@ namespace iLikeExplode.Explode.Tools {
                 transition+=0.01f;
                 if(transition > 1f)
                 transition = 1f;
+                if(Main.rainTime <= 1000) {
+                    Main.maxRain = (int)MathHelper.Lerp(0, Main.maxRain, (float)Main.rainTime/1000);
+                    Main.maxRaining = MathHelper.Lerp(0, Main.maxRaining, (float)Main.rainTime/1000);
+                }
             }
             else {
                 transition-=0.01f;
@@ -112,7 +116,7 @@ namespace iLikeExplode.Explode.Tools {
                 transition = 0f;
                 
             }
-            
+
             intensity = (Main.maxRain*((Main.maxRaining+0.1f)/0.86f)/100);
 
             Filters.Scene["RainFilter"].GetShader().UseIntensity(intensity*transition);
