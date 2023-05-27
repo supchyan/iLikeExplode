@@ -104,7 +104,10 @@ namespace iLikeExplode.Explode.Tools {
             Tile tile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
             bool WallCollision = tile.WallType > WallID.None;
 
-            if(Main.raining && !WallCollision && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow) {
+            if(Main.raining && !WallCollision && 
+            !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow && 
+            !Main.LocalPlayer.ZoneNormalSpace && Main.LocalPlayer.position.Y < 5430f) 
+            {
                 RainTransition+=0.01f;
                 if(RainTransition > 1f)
                 RainTransition = 1f;
@@ -124,12 +127,5 @@ namespace iLikeExplode.Explode.Tools {
             Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition);
 
         }
-        public override void PostUpdateWorld() {
-            Main.rainTime = 20000;
-            Main.raining = true;
-            Main.maxRaining = 0.40f;
-            Main.maxRain = 350;
-        }
-
     }
 }
