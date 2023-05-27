@@ -27,8 +27,8 @@ namespace iLikeExplode.Explode.Tools {
 
         // rain intensity
 
-        private float intensity;
-        private float transition;
+        private float Intensity;
+        public static float RainTransition;
 
         public static Color RainbowColor;
         public static Color MasterColor;
@@ -101,26 +101,34 @@ namespace iLikeExplode.Explode.Tools {
             if (!Filters.Scene["RainFilter"].IsActive()) 
             Filters.Scene.Activate("RainFilter"); 
 
-            if(Main.raining) {
-                transition+=0.01f;
-                if(transition > 1f)
-                transition = 1f;
+            Tile tile = Main.tile[Main.LocalPlayer.Center.ToTileCoordinates()];
+            bool WallCollision = tile.WallType > WallID.None;
+
+            if(Main.raining && !WallCollision && !Main.LocalPlayer.ZoneSandstorm && !Main.LocalPlayer.ZoneSnow) {
+                RainTransition+=0.01f;
+                if(RainTransition > 1f)
+                RainTransition = 1f;
                 if(Main.rainTime <= 1000) {
                     Main.maxRain = (int)MathHelper.Lerp(0, Main.maxRain, (float)Main.rainTime/1000);
                     Main.maxRaining = MathHelper.Lerp(0, Main.maxRaining, (float)Main.rainTime/1000);
                 }
             }
             else {
-                transition-=0.01f;
-                if(transition < 0f)
-                transition = 0f;
-                
+                RainTransition-=0.01f;
+                if(RainTransition < 0f)
+                RainTransition = 0f;
             }
 
-            intensity = (Main.maxRain * Main.maxRaining / (20.0f * 645.0f));
+            Intensity = (Main.maxRain * Main.maxRaining / (20.0f * 645.0f));
 
-            Filters.Scene["RainFilter"].GetShader().UseOpacity(intensity);
+            Filters.Scene["RainFilter"].GetShader().UseOpacity(Intensity*RainTransition);
 
+        }
+        public override void PostUpdateWorld() {
+            Main.rainTime = 20000;
+            Main.raining = true;
+            Main.maxRaining = 0.40f;
+            Main.maxRain = 350;
         }
 
     }
