@@ -75,11 +75,6 @@ namespace iLikeExplode.Explode.Source {
                 ModContent.ProjectileType<StaffDrawing>(), 0, 0, player.whoAmI);
             }
 
-            // if(player.ownedProjectileCounts[ModContent.ProjectileType<SigilHuge>()] < 1) {
-            //     Projectile.NewProjectile(Entity.GetSource_FromThis(), player.Center, Vector2.Zero,
-            //     ModContent.ProjectileType<SigilHuge>(), 0, 0, player.whoAmI);
-            // }
-            
         }
         public override bool Shoot(Player player, EntitySource_ItemUse_WithAmmo source, Vector2 position, Vector2 velocity, int type, int damage, float knockback) {
             Projectile.NewProjectile(Entity.GetSource_FromThis(), player.Center, Vector2.Zero,

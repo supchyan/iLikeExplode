@@ -1,8 +1,11 @@
 using System;
-using Microsoft.Xna.Framework;
 using Terraria;
 using Terraria.ID;
 using Terraria.ModLoader;
+using Terraria.DataStructures;
+using Microsoft.Xna.Framework;
+using Terraria.Graphics.Effects;
+using Terraria.Graphics.Shaders;
 
 namespace iLikeExplode.Explode.Tools {
     public class Visuals : ModSystem {
@@ -21,6 +24,11 @@ namespace iLikeExplode.Explode.Tools {
         private int scR;
         private int scG;
         private int scB;
+
+        // rain intensity
+
+        private float intensity;
+        private float transition;
 
         public static Color RainbowColor;
         public static Color MasterColor;
@@ -88,7 +96,28 @@ namespace iLikeExplode.Explode.Tools {
 
             MasterColor = new Color(scR, scG, scB); // SETTING COLOR
 
+            // RAIN FILTER
+
+            if (!Filters.Scene["RainFilter"].IsActive()) 
+            Filters.Scene.Activate("RainFilter"); 
+
+            if(Main.raining) {
+                transition+=0.01f;
+                if(transition > 1f)
+                transition = 1f;
+            }
+            else {
+                transition-=0.01f;
+                if(transition < 0f)
+                transition = 0f;
+                
+            }
+            
+            intensity = (Main.maxRain*((Main.maxRaining+0.1f)/0.86f)/100);
+
+            Filters.Scene["RainFilter"].GetShader().UseIntensity(intensity*transition);
 
         }
+
     }
 }
